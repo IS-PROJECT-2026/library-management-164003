@@ -7,7 +7,90 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>BookShelf coming soon...</h1>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">📚 BookShelf</div>
+    <nav>
+      <a href="#books">My Books</a>
+      <a href="#stats">Stats</a>
+      <button id="openModal">+ Add Book</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Your Personal Library</h1>
+    <p>Track every book you read, want to read, or are reading right now.</p>
+  </section>
+
+  <!-- FILTER BAR -->
+  <section class="filters" id="books">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="fiction">Fiction</button>
+    <button class="filter-btn" data-filter="non-fiction">Non-Fiction</button>
+    <button class="filter-btn" data-filter="science">Science</button>
+    <button class="filter-btn" data-filter="history">History</button>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search books by title or author..." />
+  </section>
+
+  <!-- BOOK GRID -->
+  <main class="book-grid" id="bookGrid">
+    <!-- Book cards injected by JS -->
+  </main>
+
+  <!-- STATS SECTION -->
+  <section class="stats" id="stats">
+    <h2>My Reading Stats</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span id="totalBooks">0</span>
+        <p>Total Books</p>
+      </div>
+      <div class="stat-card">
+        <span id="readBooks">0</span>
+        <p>Books Read</p>
+      </div>
+      <div class="stat-card">
+        <span id="unreadBooks">0</span>
+        <p>To Read</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD BOOK MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h2>Add a New Book</h2>
+      <input type="text" id="bookTitle" placeholder="Book Title" />
+      <input type="text" id="bookAuthor" placeholder="Author" />
+      <select id="bookCategory">
+        <option value="fiction">Fiction</option>
+        <option value="non-fiction">Non-Fiction</option>
+        <option value="science">Science</option>
+        <option value="history">History</option>
+      </select>
+      <select id="bookStatus">
+        <option value="unread">To Read</option>
+        <option value="reading">Currently Reading</option>
+        <option value="read">Read</option>
+      </select>
+      <div class="modal-buttons">
+        <button id="saveBook">Save Book</button>
+        <button id="closeModal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Built with ❤️ | BookShelf Library Manager</p>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
