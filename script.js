@@ -15,9 +15,9 @@ function saveBooks() {
 // ===== FORMAT STATUS LABEL =====
 function formatStatus(status) {
   const labels = { 
-    read: '✅ Read', 
-    unread: '📌 To Read', 
-    reading: '📖 Reading' 
+    read: 'Read', 
+    unread: 'To Read', 
+    reading: 'Reading' 
   };
   return labels[status] || status;
 }
@@ -130,6 +130,20 @@ document.getElementById('saveBook').addEventListener('click', addBook);
 document.getElementById('modalOverlay').addEventListener('click', (e) => {
   if (e.target.id === 'modalOverlay') closeModal();
 });
+
+// ===== FILTER BUTTONS =====
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderBooks();
+  });
+});
+
+// ===== SEARCH INPUT =====
+document.getElementById('searchInput').addEventListener('input', renderBooks);
 
 // ===== INITIAL RENDER =====
 renderBooks();
