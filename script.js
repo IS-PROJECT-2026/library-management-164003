@@ -82,5 +82,54 @@ function renderBooks() {
   updateStats();
 }
 
+// ===== MODAL CONTROLS =====
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+// ===== ADD BOOK =====
+function addBook() {
+  const title    = document.getElementById('bookTitle').value.trim();
+  const author   = document.getElementById('bookAuthor').value.trim();
+  const category = document.getElementById('bookCategory').value;
+  const status   = document.getElementById('bookStatus').value;
+
+  if (!title || !author) {
+    alert('Please fill in the title and author fields.');
+    return;
+  }
+
+  const newBook = {
+    id: Date.now(),
+    title,
+    author,
+    category,
+    status
+  };
+
+  books.push(newBook);
+  saveBooks();
+  renderBooks();
+  closeModal();
+
+  // Clear inputs after saving
+  document.getElementById('bookTitle').value = '';
+  document.getElementById('bookAuthor').value = '';
+}
+
+// ===== MODAL EVENT LISTENERS =====
+document.getElementById('openModal').addEventListener('click', openModal);
+document.getElementById('closeModal').addEventListener('click', closeModal);
+document.getElementById('saveBook').addEventListener('click', addBook);
+
+// Close modal when clicking outside it
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'modalOverlay') closeModal();
+});
+
 // ===== INITIAL RENDER =====
 renderBooks();
