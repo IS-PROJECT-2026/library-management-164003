@@ -1,63 +1,49 @@
-// ===== DATA =====
+// ========================================
+// BOOKSHELF — Library Management System
+// ========================================
+
+// ===== STATE =====
 let books = JSON.parse(localStorage.getItem('bookshelf')) || [
-  { id: 1, title: "Atomic Habits", author: "James Clear", category: "non-fiction", status: "read" },
-  { id: 2, title: "Dune", author: "Frank Herbert", category: "fiction", status: "reading" },
-  { id: 3, title: "A Brief History of Time", author: "Stephen Hawking", category: "science", status: "unread" }
+  { id: 1, title: "Atomic Habits",           author: "James Clear",      category: "non-fiction", status: "read"    },
+  { id: 2, title: "Dune",                    author: "Frank Herbert",    category: "fiction",     status: "reading" },
+  { id: 3, title: "A Brief History of Time", author: "Stephen Hawking", category: "science",     status: "unread"  }
 ];
 
 let currentFilter = "all";
 
-// ===== SAVE TO LOCALSTORAGE =====
+// ===== PERSISTENCE =====
 function saveBooks() {
   localStorage.setItem('bookshelf', JSON.stringify(books));
 }
 
-// ===== FORMAT STATUS LABEL =====
+// ===== HELPERS =====
 function formatStatus(status) {
-  const labels = { 
-    read: 'Read', 
-    unread: 'To Read', 
-    reading: 'Reading' 
+  const labels = {
+    read:    '✅ Read',
+    unread:  '📌 To Read',
+    reading: '📖 Reading'
   };
   return labels[status] || status;
 }
 
-// ===== UPDATE STATS =====
-function updateStats() {
-  document.getElementById('totalBooks').textContent = books.length;
-  document.getElementById('readBooks').textContent = books.filter(b => b.status === 'read').length;
-  document.getElementById('unreadBooks').textContent = books.filter(b => b.status === 'unread').length;
+function getSearchTerm() {
+  return document.getElementById('searchInput').value.toLowerCase();
 }
 
-// ===== TOGGLE READ STATUS =====
-function toggleStatus(id) {
-  const book = books.find(b => b.id === id);
-  if (!book) return;
-  const cycle = ['unread', 'reading', 'read'];
-  const next = cycle[(cycle.indexOf(book.status) + 1) % cycle.length];
-  book.status = next;
-  saveBooks();
-  renderBooks();
-}
-
-// ===== DELETE BOOK =====
-function deleteBook(id) {
-  books = books.filter(b => b.id !== id);
-  saveBooks();
-  renderBooks();
-}
-
-// ===== RENDER BOOKS =====
-function renderBooks() {
-  const grid = document.getElementById('bookGrid');
-  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-
-  let filtered = books.filter(book => {
+function filterBooks() {
+  const searchTerm = getSearchTerm();
+  return books.filter(book => {
     const matchFilter = currentFilter === 'all' || book.category === currentFilter;
     const matchSearch = book.title.toLowerCase().includes(searchTerm) ||
                         book.author.toLowerCase().includes(searchTerm);
     return matchFilter && matchSearch;
   });
+}
+
+// ===== RENDER =====
+function renderBooks() {
+  const grid    = document.getElementById('bookGrid');
+  const filtered = filterBooks();
 
   if (filtered.length === 0) {
     grid.innerHTML = `
@@ -73,7 +59,7 @@ function renderBooks() {
         <span class="category-tag">${book.category}</span>
         <div class="card-actions">
           <button class="btn-toggle" onclick="toggleStatus(${book.id})">Toggle Status</button>
-          <button class="btn-delete" onclick="deleteBook(${book.id})">Remove</button>
+          <button class="btn-delete"  onclick="deleteBook(${book.id})">Remove</button>
         </div>
       </div>
     `).join('');
@@ -82,16 +68,29 @@ function renderBooks() {
   updateStats();
 }
 
-// ===== MODAL CONTROLS =====
-function openModal() {
-  document.getElementById('modalOverlay').classList.add('active');
+// ===== STATS =====
+function updateStats() {
+  document.getElementById('totalBooks').textContent  = books.length;
+  document.getElementById('readBooks').textContent   = books.filter(b => b.status === 'read').length;
+  document.getElementById('unreadBooks').textContent = books.filter(b => b.status === 'unread').length;
 }
 
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('active');
+// ===== BOOK ACTIONS =====
+function toggleStatus(id) {
+  const book  = books.find(b => b.id === id);
+  if (!book) return;
+  const cycle = ['unread', 'reading', 'read'];
+  book.status = cycle[(cycle.indexOf(book.status) + 1) % cycle.length];
+  saveBooks();
+  renderBooks();
 }
 
-// ===== ADD BOOK =====
+function deleteBook(id) {
+  books = books.filter(b => b.id !== id);
+  saveBooks();
+  renderBooks();
+}
+
 function addBook() {
   const title    = document.getElementById('bookTitle').value.trim();
   const author   = document.getElementById('bookAuthor').value.trim();
@@ -103,38 +102,33 @@ function addBook() {
     return;
   }
 
-  const newBook = {
-    id: Date.now(),
-    title,
-    author,
-    category,
-    status
-  };
-
-  books.push(newBook);
+  books.push({ id: Date.now(), title, author, category, status });
   saveBooks();
   renderBooks();
   closeModal();
+  clearModalInputs();
+}
 
-  // Clear inputs after saving
-  document.getElementById('bookTitle').value = '';
+function clearModalInputs() {
+  document.getElementById('bookTitle').value  = '';
   document.getElementById('bookAuthor').value = '';
 }
 
-// ===== MODAL EVENT LISTENERS =====
+// ===== MODAL =====
+function openModal()  { document.getElementById('modalOverlay').classList.add('active');    }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+
+// ===== EVENT LISTENERS =====
 document.getElementById('openModal').addEventListener('click', openModal);
 document.getElementById('closeModal').addEventListener('click', closeModal);
 document.getElementById('saveBook').addEventListener('click', addBook);
 
-// Close modal when clicking outside it
 document.getElementById('modalOverlay').addEventListener('click', (e) => {
   if (e.target.id === 'modalOverlay') closeModal();
 });
 
-// ===== FILTER BUTTONS =====
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentFilter = btn.dataset.filter;
@@ -142,8 +136,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-// ===== SEARCH INPUT =====
 document.getElementById('searchInput').addEventListener('input', renderBooks);
 
-// ===== INITIAL RENDER =====
+// ===== INIT =====
 renderBooks();
