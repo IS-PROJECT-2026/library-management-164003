@@ -16,6 +16,15 @@ function saveBooks() {
   localStorage.setItem('bookshelf', JSON.stringify(books));
 }
 
+// ===== CLEAR ALL BOOKS =====
+function clearLibrary() {
+  if (confirm('Are you sure you want to clear your entire library? This cannot be undone.')) {
+    books = [];
+    saveBooks();
+    renderBooks();
+  }
+}
+
 // ===== HELPERS =====
 function formatStatus(status) {
   const labels = {
