@@ -372,4 +372,16 @@ footer {
   .stats-grid {
     grid-template-columns: 1fr;
   }
+
+}
+/* ===== CLEAR BUTTON ===== */
+.clear-btn {
+  border-color: #c0392b;
+  color: #c0392b;
+  margin-left: auto;
+}
+
+.clear-btn:hover {
+  background: #c0392b;
+  color: white;
 }
