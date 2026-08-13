@@ -385,3 +385,7 @@ footer {
   background: #c0392b;
   color: white;
 }
+/* ===== THEME OVERRIDE — BRANCH C ===== */
+body {
+  background: #eaf4fb;
+}
