@@ -1,4 +1,4 @@
-# BookShelf — Library Management System
+#  BookShelf — Library Management System
 
 A personal library tracker built with vanilla HTML, CSS and JavaScript.
 
@@ -11,11 +11,9 @@ A personal library tracker built with vanilla HTML, CSS and JavaScript.
 - Live reading stats dashboard
 
 ## Live Demo
-🔗 Coming soon via GitHub Pages
+ Coming soon via GitHub Pages
 
 ## Tech Stack
 - HTML5
 - CSS3 (Flexbox & Grid)
 - Vanilla JavaScript
-
-## Project Structure
