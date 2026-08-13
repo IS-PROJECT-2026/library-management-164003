@@ -79,9 +79,17 @@ function renderBooks() {
 
 // ===== STATS =====
 function updateStats() {
-  document.getElementById('totalBooks').textContent  = books.length;
-  document.getElementById('readBooks').textContent   = books.filter(b => b.status === 'read').length;
-  document.getElementById('unreadBooks').textContent = books.filter(b => b.status === 'unread').length;
+  const total    = books.length;
+  const read     = books.filter(b => b.status === 'read').length;
+  const unread   = books.filter(b => b.status === 'unread').length;
+  const reading  = books.filter(b => b.status === 'reading').length;
+  const percent  = total > 0 ? Math.round((read / total) * 100) : 0;
+
+  document.getElementById('totalBooks').textContent   = total;
+  document.getElementById('readBooks').textContent    = read;
+  document.getElementById('unreadBooks').textContent  = unread;
+  document.getElementById('readingBooks').textContent = reading;
+  document.getElementById('percentRead').textContent  = percent + '%';
 }
 
 // ===== BOOK ACTIONS =====
