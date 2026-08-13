@@ -19,3 +19,12 @@ A personal library tracker built with vanilla HTML, CSS and JavaScript.
 - Vanilla JavaScript
 
 ## Project Structure
+
+## Setup
+Clone the repo and open `index.html` in your browser — no build step needed.
+
+```bash
+git clone https://github.com/IS-PROJECT-2026/library-management-[your-number].git
+cd library-management-[your-number]
+open index.html
+```
