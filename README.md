@@ -11,7 +11,7 @@ A personal library tracker built with vanilla HTML, CSS and JavaScript.
 - Live reading stats dashboard
 
 ## Live Demo
- Coming soon via GitHub Pages
+🔗 [View Live Site](https://is-project-2026.github.io/library-management-164003/)
 
 ## Tech Stack
 - HTML5
@@ -24,7 +24,7 @@ A personal library tracker built with vanilla HTML, CSS and JavaScript.
 Clone the repo and open `index.html` in your browser — no build step needed.
 
 ```bash
-git clone https://github.com/IS-PROJECT-2026/library-management-[your-number].git
-cd library-management-[your-number]
+git clone https://github.com/IS-PROJECT-2026/library-management-164003.git
+cd library-management-164003
 open index.html
 ```
